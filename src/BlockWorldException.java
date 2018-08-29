@@ -1,2 +1,2 @@
-public class BlockWorldException {
+public class BlockWorldException extends Exception {
 }

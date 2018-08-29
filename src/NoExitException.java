@@ -1,2 +1,2 @@
-public class NoExitException {
+public class NoExitException extends BlockWorldException {
 }

@@ -1,2 +1,2 @@
-public class TooLowException {
+public class TooLowException extends BlockWorldException {
 }

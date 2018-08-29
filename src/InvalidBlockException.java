@@ -1,2 +1,2 @@
-public class InvalidBlockException {
+public class InvalidBlockException extends BlockWorldException {
 }
