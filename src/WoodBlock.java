@@ -11,7 +11,7 @@ public class WoodBlock implements Block {
      */
     @Override
     public String getBlockType() {
-        return null;
+        return "wood";
     }
 
     /**
@@ -22,7 +22,7 @@ public class WoodBlock implements Block {
      */
     @Override
     public String getColour() {
-        return null;
+        return "brown";
     }
 
     /**
@@ -33,7 +33,7 @@ public class WoodBlock implements Block {
      */
     @Override
     public boolean isCarryable() {
-        return false;
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ public class WoodBlock implements Block {
      */
     @Override
     public boolean isDiggable() {
-        return false;
+        return true;
     }
 
     /**
@@ -55,6 +55,6 @@ public class WoodBlock implements Block {
      */
     @Override
     public boolean isMoveable() {
-        return false;
+        return true;
     }
 }

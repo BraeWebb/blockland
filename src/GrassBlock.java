@@ -11,7 +11,7 @@ public class GrassBlock extends GroundBlock {
      */
     @Override
     public String getBlockType() {
-        return null;
+        return "grass";
     }
 
     /**
@@ -22,7 +22,7 @@ public class GrassBlock extends GroundBlock {
      */
     @Override
     public String getColour() {
-        return null;
+        return "green";
     }
 
     /**

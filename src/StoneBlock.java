@@ -11,7 +11,7 @@ public class StoneBlock implements Block {
      */
     @Override
     public String getBlockType() {
-        return null;
+        return "stone";
     }
 
     /**
@@ -22,7 +22,7 @@ public class StoneBlock implements Block {
      */
     @Override
     public String getColour() {
-        return null;
+        return "gray";
     }
 
     /**

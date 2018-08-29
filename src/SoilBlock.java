@@ -11,7 +11,7 @@ public class SoilBlock extends GroundBlock {
      */
     @Override
     public String getBlockType() {
-        return null;
+        return "soil";
     }
 
     /**
@@ -22,7 +22,7 @@ public class SoilBlock extends GroundBlock {
      */
     @Override
     public String getColour() {
-        return null;
+        return "black";
     }
 
     /**
@@ -33,6 +33,6 @@ public class SoilBlock extends GroundBlock {
      */
     @Override
     public boolean isCarryable() {
-        return false;
+        return true;
     }
 }
