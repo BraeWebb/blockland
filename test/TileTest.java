@@ -187,8 +187,8 @@ public class TileTest {
         }
 
         try {
-            Block topBlock = tile.dig();
-            Block expectedBlock = startingBlocks.get(startingBlocks.size() - 1);
+            Block expectedBlock = tallTile.getTopBlock();
+            Block topBlock = tallTile.dig();
 
             Assert.assertEquals(expectedBlock, topBlock);
         } catch (TooLowException|InvalidBlockException e) {
@@ -224,6 +224,7 @@ public class TileTest {
             tile.addExit("tall", tallTile);
             tile.addExit("empty", emptyTile);
             tallTile.addExit("tall", tile);
+            emptyTile.addExit("tile", tile);
         } catch (NoExitException e) {
             Assert.fail();
         }
@@ -246,6 +247,9 @@ public class TileTest {
 
         // moving to a taller block causes TooHighException
         try {
+            tile.placeBlock(new WoodBlock());
+            tile.placeBlock(new WoodBlock());
+            tile.moveBlock("tall");
             tile.moveBlock("tall");
             Assert.fail();
         } catch (NoExitException|InvalidBlockException e) {
@@ -254,7 +258,8 @@ public class TileTest {
 
         // trying to move a grass block causes an InvalidBlockException
         try {
-            tile.moveBlock("empty");
+            emptyTile.placeBlock(new GrassBlock());
+            emptyTile.moveBlock("tile");
             Assert.fail();
         } catch (NoExitException|TooHighException e) {
             Assert.fail();
@@ -263,10 +268,10 @@ public class TileTest {
 
         // successfully move a tile from one block to another
         try {
-            Assert.assertEquals(7, tallTile.getBlocks().size());
+            Assert.assertEquals(8, tallTile.getBlocks().size());
             Assert.assertEquals(3, tile.getBlocks().size());
             tallTile.moveBlock("tall");
-            Assert.assertEquals(6, tallTile.getBlocks().size());
+            Assert.assertEquals(7, tallTile.getBlocks().size());
             Assert.assertEquals(4, tile.getBlocks().size());
         } catch (NoExitException|TooHighException|InvalidBlockException e) {
             Assert.fail();
