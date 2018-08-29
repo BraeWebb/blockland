@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import java.util.Map;
  */
 public class Tile {
 
+    private List<Block> blocks;
+    private Map<String, Tile> exits;
+
     /**
      * Construct a new tile.
      * Each tile should be constructed with no exits (getExits().size() == 0).
@@ -15,7 +20,12 @@ public class Tile {
      * i.e. getBlocks() must contain {SoilBlock, SoilBlock, GrassBlock} for a new Tile.
      */
     public Tile() {
+        blocks = new ArrayList<>();
+        blocks.add(new SoilBlock());
+        blocks.add(new SoilBlock());
+        blocks.add(new GrassBlock());
 
+        exits = new HashMap<>();
     }
 
     /**
@@ -34,7 +44,18 @@ public class Tile {
      * @throws TooHighException if startingBlocks.size() > 8, or if startingBlocks elements with index ≥ 3 are instances of GroundBlock
      */
     public Tile(List<Block> startingBlocks) throws TooHighException {
+        if (startingBlocks.size() > 8) {
+            throw new TooHighException();
+        }
 
+        for (int i = 3; i < startingBlocks.size(); i++) {
+            if (startingBlocks.get(i) instanceof GroundBlock) {
+                throw new TooHighException();
+            }
+        }
+
+        blocks = new ArrayList<>(startingBlocks);
+        exits = new HashMap<>();
     }
 
     /**
@@ -44,7 +65,7 @@ public class Tile {
      * @return map of names to Tiles
      */
     public Map<String, Tile> getExists() {
-        return null;
+        return exits;
     }
 
     /**
@@ -55,7 +76,7 @@ public class Tile {
      * @return Blocks on the Tile
      */
     public List<Block> getBlocks() {
-        return null;
+        return blocks;
     }
 
     /**
@@ -67,7 +88,10 @@ public class Tile {
      * @throws TooLowException if there are no blocks on the tile
      */
     public Block getTopBlock() throws TooLowException {
-        return null;
+        if (blocks.size() == 0) {
+            throw new TooLowException();
+        }
+        return blocks.get(blocks.size() - 1);
     }
 
     /**
@@ -77,7 +101,10 @@ public class Tile {
      * @throws TooLowException if there are no blocks on the tile
      */
     public void removeTopBlock() throws TooLowException {
-
+        if (blocks.size() == 0) {
+            throw new TooLowException();
+        }
+        blocks.remove(blocks.size() - 1);
     }
 
     /**
@@ -91,7 +118,10 @@ public class Tile {
      * @throws NoExitException if name or target is null
      */
     public void addExit(String name, Tile target) throws NoExitException {
-
+        if (name == null || target == null) {
+            throw new NoExitException();
+        }
+        this.exits.put(name, target);
     }
 
     /**
