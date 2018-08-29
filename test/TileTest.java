@@ -127,12 +127,12 @@ public class TileTest {
         Block topBlock = startingBlocks.get(startingBlocks.size() - 1);
         Block secondBlock = startingBlocks.get(startingBlocks.size() - 2);
         try {
-            Assert.assertEquals(8, tallTile.getBlocks().size());
+            Assert.assertEquals(7, tallTile.getBlocks().size());
             Assert.assertEquals(topBlock, tallTile.getTopBlock());
 
             tallTile.removeTopBlock();
 
-            Assert.assertEquals(7, tallTile.getBlocks().size());
+            Assert.assertEquals(6, tallTile.getBlocks().size());
             Assert.assertEquals(secondBlock, tallTile.getTopBlock());
         } catch (TooLowException e) {
             Assert.fail();
