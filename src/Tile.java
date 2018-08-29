@@ -133,7 +133,10 @@ public class Tile {
      * @throws NoExitException if name is not in exits, or name is null
      */
     public void removeExit(String name) throws NoExitException {
-
+        if (name == null || !exits.containsKey(name)) {
+            throw new NoExitException();
+        }
+        exits.remove(name);
     }
 
     /**
@@ -149,7 +152,17 @@ public class Tile {
      * @throws InvalidBlockException if the block is not diggable
      */
     public Block dig() throws TooLowException, InvalidBlockException {
-        return null;
+        if (blocks.isEmpty()) {
+            throw new TooLowException();
+        }
+
+        Block topBlock = getTopBlock();
+        if (!topBlock.isDiggable()) {
+            throw new InvalidBlockException();
+        }
+
+        removeTopBlock();
+        return topBlock;
     }
 
     /**
@@ -167,7 +180,25 @@ public class Tile {
      */
     public void moveBlock(String exitName)
             throws TooHighException, InvalidBlockException, NoExitException {
+        if (exitName == null || !exits.containsKey(exitName)) {
+            throw new NoExitException();
+        }
 
+        Tile otherTile = exits.get(exitName);
+        if (otherTile == null) {
+            throw new NoExitException();
+        }
+
+        try {
+            Block newTile = getTopBlock();
+            if (!newTile.isMoveable()) {
+                throw new InvalidBlockException();
+            }
+            removeTopBlock();
+            otherTile.placeBlock(newTile);
+        } catch (TooLowException e) {
+            throw new TooHighException();
+        }
     }
 
     /**
@@ -182,6 +213,18 @@ public class Tile {
      */
     public void placeBlock(Block block)
             throws TooHighException, InvalidBlockException {
+        if (block == null) {
+            throw new InvalidBlockException();
+        }
 
+        if (blocks.size() >= 8) {
+            throw new TooHighException();
+        }
+
+        if (blocks.size() >= 3 && block instanceof GroundBlock) {
+            throw new TooHighException();
+        }
+
+        blocks.add(block);
     }
 }
