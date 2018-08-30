@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,6 +8,10 @@ import java.util.List;
  */
 public class Builder {
 
+    private String name;
+    private Tile currentTile;
+    private List<Block> inventory;
+
     /**
      * Create a builder.
      * Set the name of the Builder (such that getName() == name) and the current tile to startingTile (such that getCurrentTile() == startingTile).
@@ -15,7 +20,9 @@ public class Builder {
      * @param startingTile the tile the builder starts in - cannot be null
      */
     public Builder(String name, Tile startingTile) {
-
+        this.name = name;
+        this.currentTile = startingTile;
+        this.inventory = new ArrayList<>();
     }
 
     /**
@@ -32,7 +39,15 @@ public class Builder {
      */
     public Builder(String name, Tile startingTile, List<Block> startingInventory)
             throws InvalidBlockException {
+        this.name = name;
+        this.currentTile = startingTile;
 
+        for (Block block : startingInventory) {
+            if (!block.isCarryable()) {
+                throw new InvalidBlockException();
+            }
+        }
+        this.inventory = new ArrayList<>(startingInventory);
     }
 
     /**
@@ -41,7 +56,7 @@ public class Builder {
      * @return the Builder's name
      */
     public String getName() {
-        return null;
+        return name;
     }
 
     /**
@@ -50,7 +65,7 @@ public class Builder {
      * @return the current tile
      */
     public Tile getCurrentTile() {
-        return null;
+        return currentTile;
     }
 
     /**
@@ -59,7 +74,7 @@ public class Builder {
      * @return blocks in the inventory
      */
     public List<Block> getInventory() {
-        return null;
+        return inventory;
     }
 
     /**
